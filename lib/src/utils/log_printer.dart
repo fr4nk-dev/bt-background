@@ -14,7 +14,7 @@ class SimpleLogPrinter extends LogPrinter {
     var emoji = PrettyPrinter.levelEmojis[level];
     var white = PrettyPrinter.levelColors[Level.warning];
     println(white('#########################################################'));
-    println(color('$emoji  [$className] '));
+    println(color('$emoji  [$className]  ${DateTime.now()} '));
     println(color(' $message'));
     println(white('#########################################################'));
   }
