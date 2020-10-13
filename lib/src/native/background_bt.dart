@@ -12,7 +12,8 @@ class BackgroundBt {
   final logger = getLogger('BackgroundLocation');
   final _methodChannel = MethodChannel('fr4nk.com/background-location');
 
-  bool _running = false;
+  final StreamController<List<Beacon>> _beaconController = StreamController();
+  Stream<List<Beacon>> get streamBeacon => _beaconController.stream;
 
   final StreamController<BluetoothState> streamController = StreamController();
   StreamSubscription<BluetoothState> _streamBluetooth;
@@ -23,7 +24,6 @@ class BackgroundBt {
   Future<void> start() async {
     logger.i('INICIANDO BACKGROUND LOCATION');
     _methodChannel.invokeMethod('start');
-    _running = true;
 
     await flutterBeacon.initializeScanning;
 
@@ -43,6 +43,7 @@ class BackgroundBt {
         _beacons.clear();
         _regionBeacons.values.forEach((list) {
           if (list.length > 0) {
+            _beaconController.add(list);
             logger.i('BEACON DETECTADO');
             logger.d(list[0]);
           }
@@ -55,7 +56,6 @@ class BackgroundBt {
 
   Future<void> stop() async {
     await _methodChannel.invokeMethod('stop');
-    _running = false;
     if (_beacons.isNotEmpty) {
       _beacons.clear();
     }
@@ -65,6 +65,7 @@ class BackgroundBt {
     streamController?.close();
     _streamRanging?.cancel();
     _streamBluetooth?.cancel();
+    _beaconController?.close();
     flutterBeacon.close;
   }
 

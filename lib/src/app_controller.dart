@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:background_blue/src/native/background_bt.dart';
 import 'package:background_blue/src/utils/log_printer.dart';
 import 'package:flutter_beacon/flutter_beacon.dart';

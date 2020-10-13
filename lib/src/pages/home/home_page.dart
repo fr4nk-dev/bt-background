@@ -1,4 +1,5 @@
 import 'package:background_blue/src/app_controller.dart';
+import 'package:background_blue/src/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_beacon/flutter_beacon.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appController = Get.find<AppController>();
+    final homeController = Get.put(HomeController());
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Bluetooth Background'),
@@ -59,6 +62,17 @@ class HomePage extends StatelessWidget {
                     print('Detener escaneo');
                     appController.pauseScanBeacon();
                   },
+                ),
+                Obx(
+                  () => ListView.builder(
+                    itemCount: homeController.beacons.length,
+                    itemBuilder: (BuildContext _, int index) {
+                      return ListTile(
+                        title: Text(
+                            '${homeController.beacons[index].proximityUUID}'),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
