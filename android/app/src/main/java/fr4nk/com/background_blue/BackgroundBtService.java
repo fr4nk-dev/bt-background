@@ -32,7 +32,7 @@ public class BackgroundBtService extends Service {
         Notification.Builder notificationBuilder;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationBuilder = new Notification.Builder(this, "Bluetooth Service");
+            notificationBuilder = new Notification.Builder(this, "Background BT");
             NotificationManager manager = getSystemService(NotificationManager.class);
 
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL,

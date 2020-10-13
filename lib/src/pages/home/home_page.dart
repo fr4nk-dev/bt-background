@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
               children: [
                 Obx(
                   () {
-                    if (appController.authorizationStatusOk.value) {
+                    if (!appController.authorizationStatusOk.value) {
                       return RaisedButton(
                           child: Text('Habilitar localizacion'),
                           onPressed: () async {
@@ -29,15 +29,12 @@ class HomePage extends StatelessWidget {
                             print(appController.authorizationStatusOk.value);
                           });
                     } else {
-                      return Icon(
-                        Icons.perm_scan_wifi,
-                        color: Colors.green,
-                      );
+                      return Text('Localizacion habilitada');
                     }
                   },
                 ),
                 Obx(() {
-                  if (appController.bluetoothEnabled.value) {
+                  if (!appController.bluetoothEnabled.value) {
                     return RaisedButton(
                         child: Text('Habilitar bluetooth'),
                         onPressed: () async {
@@ -46,10 +43,7 @@ class HomePage extends StatelessWidget {
                           print(appController.bluetoothEnabled.value);
                         });
                   } else {
-                    return Icon(
-                      Icons.bluetooth,
-                      color: Colors.green,
-                    );
+                    return Text('Bluetooth habilitado');
                   }
                 }),
                 RaisedButton(

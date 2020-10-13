@@ -56,21 +56,26 @@ class AppController extends GetxController {
           'bluetoothEnabled=$bluetoothEnabled');
       return;
     }
+
     final regions = <Region>[
       Region(
-        identifier: 'XIAOMI REDMI 9T PRO TEST',
-        proximityUUID: '013777af-ba7e-45f6-9316-63f2c818b21f',
+        identifier: 'REDMI NOTE 4',
+        proximityUUID: '2c5b729b-8325-472c-815b-44bb163ce163',
       ),
     ];
 
     _streamRanging =
         flutterBeacon.ranging(regions).listen((RangingResult result) {
-      print(result);
+      // print(result);
 
       if (result != null) {
         _regionBeacons[result.region] = result.beacons;
         _beacons.clear();
         _regionBeacons.values.forEach((list) {
+          if (list.length > 0) {
+            print('####### SE DETECTO EL BEACON ######');
+            print(list);
+          }
           _beacons.addAll(list);
         });
         _beacons.sort(_compareParameters);
